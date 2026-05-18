@@ -591,11 +591,58 @@ body {
   font-weight: 500;
 }
 
+.confession-item .view-more {
+  display: block;
+  color: #1e6496;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 8px;
+}
+
 .no-confessions {
   text-align: center;
   color: #6fb3e8;
   padding: 30px;
   font-style: italic;
+}
+
+/* Individual confession view */
+.confession-detail {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e8f4fd 100%);
+  border: 3px solid #1e6496;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.confession-full {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.confession-from {
+  color: #1e6496;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.confession-text {
+  color: #2c3e50;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.confession-time {
+  color: #6fb3e8;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid #a8d5f7;
 }
 
 /* Hide scroll indicators */
