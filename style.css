@@ -329,6 +329,7 @@ body {
   gap: 10px;
   justify-content: center;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .next-btn, .back-btn {
@@ -345,6 +346,7 @@ body {
   background: linear-gradient(135deg, #1e6496 0%, #3d9dd1 100%);
   color: white;
   flex: 1;
+  min-width: 150px;
 }
 
 .next-btn:hover {
@@ -356,6 +358,7 @@ body {
   background: linear-gradient(135deg, #6fb3e8 0%, #4a9fd8 100%);
   color: white;
   flex: 1;
+  min-width: 150px;
 }
 
 .back-btn:hover {
@@ -566,6 +569,13 @@ body {
   margin-bottom: 12px;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confession-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(30, 100, 150, 0.2);
 }
 
 .confession-item p {
@@ -586,4 +596,256 @@ body {
   color: #6fb3e8;
   padding: 30px;
   font-style: italic;
+}
+
+/* Hide scroll indicators */
+.scroll-indicator {
+  display: none !important;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+
+  .subtitle-text {
+    font-size: 1rem;
+  }
+
+  .scene-container {
+    padding: 20px 15px;
+    gap: 20px;
+    min-height: auto;
+  }
+
+  .cat {
+    width: 140px;
+    height: 140px;
+  }
+
+  .envelope {
+    width: 160px;
+    height: 110px;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: 90vw;
+    padding: 20px;
+    max-height: 90vh;
+    border-radius: 10px;
+  }
+
+  .modal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .step-icon {
+    font-size: 2.5rem;
+  }
+
+  .step p {
+    font-size: 1rem;
+    margin: 15px 0;
+  }
+
+  .next-btn, .back-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
+  .step-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .step-buttons .next-btn,
+  .step-buttons .back-btn {
+    flex: 1;
+    min-width: unset;
+    width: 100%;
+  }
+
+  .confession-preview {
+    padding: 15px;
+    font-size: 1rem;
+    margin: 15px 0;
+  }
+
+  .modal textarea {
+    height: 100px;
+    font-size: 16px;
+    margin: 15px 0;
+  }
+
+  .confessions-list {
+    max-height: 300px;
+  }
+
+  .confession-item {
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .confession-item p {
+    margin: 0 0 5px 0;
+    font-size: 0.95rem;
+  }
+
+  .building-1 { width: 25px; height: 50px; }
+  .building-2 { width: 30px; height: 75px; }
+  .building-3 { width: 28px; height: 65px; }
+  .building-4 { width: 32px; height: 80px; }
+  .building-5 { width: 28px; height: 70px; }
+  .building-6 { width: 26px; height: 60px; }
+}
+
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 2rem;
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle-text {
+    font-size: 0.9rem;
+  }
+
+  .scene-container {
+    padding: 15px 10px;
+    gap: 15px;
+    min-height: auto;
+  }
+
+  .cat {
+    width: 100px;
+    height: 100px;
+  }
+
+  .envelope {
+    width: 140px;
+    height: 95px;
+  }
+
+  .heart-icon {
+    font-size: 2rem;
+  }
+
+  .envelope-text {
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+    max-height: 85vh;
+    border-radius: 8px;
+  }
+
+  .close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+
+  .modal h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .step-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .step p {
+    font-size: 0.95rem;
+    margin: 12px 0;
+  }
+
+  .next-btn, .back-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .confession-preview {
+    padding: 12px;
+    font-size: 0.95rem;
+    margin: 12px 0;
+    max-height: 150px;
+  }
+
+  .modal textarea {
+    height: 80px;
+    font-size: 16px;
+    margin: 12px 0;
+  }
+
+  .name-input {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .confessions-list {
+    max-height: 250px;
+  }
+
+  .confession-item {
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+
+  .confession-item p {
+    margin: 0 0 4px 0;
+    font-size: 0.9rem;
+  }
+
+  .confession-item .time {
+    font-size: 0.8rem;
+  }
+
+  .password-input {
+    font-size: 1rem;
+    margin: 15px 0;
+  }
+
+  #message {
+    font-size: 0.9rem;
+  }
+
+  .success, .error {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .main-title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle-text {
+    font-size: 0.8rem;
+  }
+
+  .cat {
+    width: 80px;
+    height: 80px;
+  }
+
+  .envelope {
+    width: 120px;
+    height: 80px;
+  }
+
+  .modal h2 {
+    font-size: 1.1rem;
+  }
+
+  .next-btn, .back-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
 }
