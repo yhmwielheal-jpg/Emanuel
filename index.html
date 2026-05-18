@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Confess Your Heart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background buildings -->
+  <div class="background">
+    <div class="buildings">
+      <div class="building building-1"></div>
+      <div class="building building-2"></div>
+      <div class="building building-3"></div>
+      <div class="building building-4"></div>
+      <div class="building building-5"></div>
+      <div class="building building-6"></div>
+    </div>
+  </div>
+
+  <!-- Main scene -->
+  <div class="scene-container">
+    <div class="title-section">
+      <h1 class="main-title">Tell Me<br>Your Secret</h1>
+      <p class="subtitle-text">Share your confession anonymously</p>
+    </div>
+
+    <!-- Cat character -->
+    <div class="cat-container">
+      <svg class="cat" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Head -->
+        <ellipse cx="100" cy="90" rx="55" ry="60" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+        <!-- Ears -->
+        <polygon points="65,35 55,10 75,30" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+        <polygon points="135,35 145,10 125,30" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+        <polygon points="65,35 60,20 70,32" fill="#ffb3ba"/>
+        <polygon points="135,35 140,20 130,32" fill="#ffb3ba"/>
+        <!-- Eyes -->
+        <circle cx="80" cy="75" r="6" fill="#333"/>
+        <circle cx="120" cy="75" r="6" fill="#333"/>
+        <!-- Mouth -->
+        <path d="M 100 95 Q 95 105 90 100" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M 100 95 Q 105 105 110 100" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Cheeks -->
+        <circle cx="55" cy="85" r="8" fill="#ffb3ba" opacity="0.6"/>
+        <circle cx="145" cy="85" r="8" fill="#ffb3ba" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- Envelope -->
+    <div class="envelope-section">
+      <div class="envelope" id="envelope">
+        <div class="envelope-front">
+          <div class="envelope-flap"></div>
+          <div class="envelope-body">
+            <div class="heart-icon">🎀</div>
+            <p class="envelope-text">(click to begin)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for confessions -->
+    <div id="confessionModal" class="modal hidden">
+      <div class="modal-content">
+        <button class="close-btn" id="closeModal">&times;</button>
+        
+        <!-- Step 1: Welcome -->
+        <div id="step1" class="step view">
+          <div class="step-icon">💌</div>
+          <h2>Ready to Share?</h2>
+          <p>Your confession will be completely anonymous. No one will know it's you.</p>
+          <button class="next-btn" id="step1Next">Let's Go →</button>
+        </div>
+
+        <!-- Step 2: Write Confession -->
+        <div id="step2" class="step view hidden">
+          <div class="step-icon">✍️</div>
+          <h2>Write Your Secret</h2>
+          <form id="confessionForm">
+            <input type="text" id="name" placeholder="Your name (optional)" class="name-input">
+            <textarea id="confession" placeholder="What's on your mind? What do you want to confess?" required></textarea>
+            <button type="submit" class="next-btn">Next Step →</button>
+          </form>
+          <div id="message"></div>
+        </div>
+
+        <!-- Step 3: Preview & Confirm -->
+        <div id="step3" class="step view hidden">
+          <div class="step-icon">👀</div>
+          <h2>Ready to Post?</h2>
+          <div class="confession-preview">
+            <p id="previewText"></p>
+          </div>
+          <p style="color: #6fb3e8; font-size: 0.9rem; text-align: center;">This will be posted anonymously</p>
+          <div class="step-buttons">
+            <button class="next-btn" id="confirmBtn">Yes, Post It! 💙</button>
+            <button class="back-btn" id="editBtn">← Edit</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Success -->
+        <div id="step4" class="step view hidden">
+          <div class="step-icon">✨</div>
+          <h2>Your Secret is Safe</h2>
+          <p>Thank you for sharing. Your confession has been posted anonymously.</p>
+          <div class="confetti" id="confetti"></div>
+          <div class="step-buttons">
+            <button class="next-btn" id="viewBtn">View Confessions</button>
+            <button class="back-btn" id="anotherBtn">Share Another</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Password -->
+        <div id="step5" class="step view hidden">
+          <div class="step-icon">🔐</div>
+          <h2>Enter Password</h2>
+          <p>You need a password to view confessions</p>
+          <input type="password" id="passwordInput" placeholder="Enter password" class="password-input">
+          <div id="passwordMessage"></div>
+          <button class="next-btn" id="submitPasswordBtn">Unlock →</button>
+          <button class="back-btn" id="passwordBackBtn">← Back</button>
+        </div>
+
+        <!-- Step 6: View Confessions -->
+        <div id="step6" class="step view hidden">
+          <div class="step-icon">📖</div>
+          <h2>Recent Confessions</h2>
+          <div id="confessionsContainer" class="confessions-list">
+            <div class="no-confessions">No confessions yet. Be the first!</div>
+          </div>
+          <button class="back-btn" id="backBtn">← Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicators -->
+    <div class="scroll-indicator up" id="scrollUp">▲</div>
+    <div class="scroll-indicator down" id="scrollDown">▼</div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('confessionModal');
+    const envelope = document.getElementById('envelope');
+    const closeModal = document.getElementById('closeModal');
+    let currentStep = 1;
+    let confessionText = '';
+    let confessionName = '';
+
+    // Open modal when envelope is clicked
+    envelope.addEventListener('click', function() {
+      modal.classList.remove('hidden');
+      goToStep(1);
+    });
+
+    // Close modal
+    closeModal.addEventListener('click', function() {
+      modal.classList.add('hidden');
+    });
+
+    // Navigate between steps
+    function goToStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
+      
+      // Show current step with animation
+      const currentStepEl = document.getElementById(`step${step}`);
+      currentStepEl.classList.remove('hidden');
+      currentStepEl.style.animation = 'slideInStep 0.4s ease-out';
+      
+      currentStep = step;
+    }
+
+    // Step 1: Welcome → Step 2
+    document.getElementById('step1Next').addEventListener('click', function() {
+      goToStep(2);
+    });
+
+    // Step 2: Write → Step 3
+    document.getElementById('confessionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      confessionName = document.getElementById('name').value.trim() || 'Anonymous';
+      confessionText = document.getElementById('confession').value.trim();
+
+      if (!confessionText) {
+        document.getElementById('message').innerHTML = '<div class="error">Please write something</div>';
+        return;
+      }
+
+      // Show preview
+      document.getElementById('previewText').innerHTML = `<strong>From: ${confessionName}</strong><br><br>"${confessionText}"`;
+      goToStep(3);
+    });
+
+    // Step 3: Confirm → Step 4
+    document.getElementById('confirmBtn').addEventListener('click', function() {
+      let confessions = JSON.parse(localStorage.getItem('confessions')) || [];
+      confessions.unshift({
+        name: confessionName,
+        text: confessionText,
+        time: new Date().toLocaleString()
+      });
+
+      if (confessions.length > 50) {
+        confessions = confessions.slice(0, 50);
+      }
+
+      localStorage.setItem('confessions', JSON.stringify(confessions));
+      goToStep(4);
+      createConfetti();
+    });
+
+    // Step 3: Edit → Step 2
+    document.getElementById('editBtn').addEventListener('click', function() {
+      goToStep(2);
+    });
+
+    // Step 4: View Confessions (Password)
+    document.getElementById('viewBtn').addEventListener('click', function() {
+      goToStep(5);
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordMessage').innerHTML = '';
+    });
+
+    // Step 4: Share Another
+    document.getElementById('anotherBtn').addEventListener('click', function() {
+      document.getElementById('name').value = '';
+      document.getElementById('confession').value = '';
+      document.getElementById('message').innerHTML = '';
+      goToStep(2);
+    });
+
+    // Step 5: Check Password
+    document.getElementById('submitPasswordBtn').addEventListener('click', function() {
+      const password = document.getElementById('passwordInput').value;
+      const passwordMessage = document.getElementById('passwordMessage');
+
+      if (password === 'Heart') {
+        passwordMessage.innerHTML = '';
+        loadConfessions();
+        goToStep(6);
+      } else {
+        passwordMessage.innerHTML = '<div class="error">Wrong password. Try again.</div>';
+        document.getElementById('passwordInput').value = '';
+      }
+    });
+
+    // Allow Enter key to submit password
+    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('submitPasswordBtn').click();
+      }
+    });
+
+    // Step 5: Password Back
+    document.getElementById('passwordBackBtn').addEventListener('click', function() {
+      goToStep(4);
+    });
+
+    // Step 6: Back to Success
+    document.getElementById('backBtn').addEventListener('click', function() {
+      goToStep(4);
+    });
+
+    // Load confessions
+    function loadConfessions() {
+      const confessions = JSON.parse(localStorage.getItem('confessions')) || [];
+      const container = document.getElementById('confessionsContainer');
+
+      if (confessions.length === 0) {
+        container.innerHTML = '<div class="no-confessions">No confessions yet. Be the first!</div>';
+        return;
+      }
+
+      container.innerHTML = confessions.map((conf) => `
+        <div class="confession-item">
+          <p><strong>From: ${conf.name || 'Anonymous'}</strong></p>
+          <p>"${conf.text}"</p>
+          <span class="time">${conf.time}</span>
+        </div>
+      `).join('');
+    }
+
+    // Confetti animation
+    function createConfetti() {
+      const confettiEl = document.getElementById('confetti');
+      confettiEl.innerHTML = '';
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement('span');
+        span.style.left = Math.random() * 100 + '%';
+        span.style.animationDelay = Math.random() * 0.3 + 's';
+        confettiEl.appendChild(span);
+      }
+    }
+
+    loadConfessions();
+  </script>
+
+</body>
+</html>
