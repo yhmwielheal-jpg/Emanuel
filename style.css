@@ -213,6 +213,39 @@ body {
   margin: 0;
 }
 
+/* Quick View Confessions Button */
+.confessions-button-section {
+  margin: 10px 0;
+}
+
+.view-confessions-quick-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #4a9fd8 0%, #6fb3e8 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(74, 159, 216, 0.3);
+  animation: subtle-float 2s ease-in-out infinite;
+}
+
+.view-confessions-quick-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 159, 216, 0.5);
+}
+
+.view-confessions-quick-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
 /* Modal */
 .modal {
   position: fixed;
@@ -677,6 +710,11 @@ body {
     height: 110px;
   }
 
+  .view-confessions-quick-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
   .modal-content {
     width: 95%;
     max-width: 90vw;
@@ -782,6 +820,11 @@ body {
 
   .envelope-text {
     font-size: 0.8rem;
+  }
+
+  .view-confessions-quick-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
   }
 
   .modal-content {
