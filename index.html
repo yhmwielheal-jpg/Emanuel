@@ -131,6 +131,20 @@
           </div>
           <button class="back-btn" id="backBtn">← Back</button>
         </div>
+
+        <!-- Step 7: View Individual Confession -->
+        <div id="step7" class="step view hidden">
+          <div class="step-icon">💭</div>
+          <h2>Full Confession</h2>
+          <div id="singleConfessionContainer" class="confession-detail">
+            <div class="confession-full">
+              <p class="confession-from" id="singleFrom"></p>
+              <p class="confession-text" id="singleText"></p>
+              <p class="confession-time" id="singleTime"></p>
+            </div>
+          </div>
+          <button class="back-btn" id="backToListBtn">← Back to List</button>
+        </div>
       </div>
     </div>
 
@@ -262,6 +276,11 @@
       goToStep(4);
     });
 
+    // Step 7: Back to List
+    document.getElementById('backToListBtn').addEventListener('click', function() {
+      goToStep(6);
+    });
+
     // Load confessions
     function loadConfessions() {
       const confessions = JSON.parse(localStorage.getItem('confessions')) || [];
@@ -272,13 +291,30 @@
         return;
       }
 
-      container.innerHTML = confessions.map((conf) => `
-        <div class="confession-item">
-          <p><strong>From: ${conf.name || 'Anonymous'}</strong></p>
-          <p>"${conf.text}"</p>
-          <span class="time">${conf.time}</span>
-        </div>
-      `).join('');
+      container.innerHTML = confessions.map((conf, index) => {
+        // Truncate text to 100 characters
+        const displayText = conf.text.length > 100 ? conf.text.substring(0, 100) + '...' : conf.text;
+        return `
+          <div class="confession-item" onclick="viewConfession(${index})">
+            <p><strong>From: ${conf.name || 'Anonymous'}</strong></p>
+            <p>"${displayText}"</p>
+            <span class="view-more">Click to view full →</span>
+            <span class="time">${conf.time}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // View individual confession
+    function viewConfession(index) {
+      const confessions = JSON.parse(localStorage.getItem('confessions')) || [];
+      if (confessions[index]) {
+        const conf = confessions[index];
+        document.getElementById('singleFrom').textContent = `From: ${conf.name || 'Anonymous'}`;
+        document.getElementById('singleText').textContent = `"${conf.text}"`;
+        document.getElementById('singleTime').textContent = `Posted: ${conf.time}`;
+        goToStep(7);
+      }
     }
 
     // Confetti animation
