@@ -60,6 +60,11 @@
       </div>
     </div>
 
+    <!-- View Confessions Button -->
+    <div class="confessions-button-section">
+      <button class="view-confessions-quick-btn" id="quickViewBtn">📖 View Confessions</button>
+    </div>
+
     <!-- Modal for confessions -->
     <div id="confessionModal" class="modal hidden">
       <div class="modal-content">
@@ -165,6 +170,14 @@
     envelope.addEventListener('click', function() {
       modal.classList.remove('hidden');
       goToStep(1);
+    });
+
+    // Quick view confessions button
+    document.getElementById('quickViewBtn').addEventListener('click', function() {
+      modal.classList.remove('hidden');
+      goToStep(5);
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordMessage').innerHTML = '';
     });
 
     // Close modal
